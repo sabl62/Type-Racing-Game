@@ -1,0 +1,447 @@
+@import url("https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap");
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: "Popins", sans-serif;
+  background: linear-gradient(135deg, #333, darkblue, purple);
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 20px;
+}
+
+.container {
+  background: linear-gradient(45deg, #333, black);
+  border-radius: 30px;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+  padding: 40px;
+  max-width: 90vw;
+  width: 75vw;
+}
+
+.title {
+  text-align: center;
+  font-size: 3em;
+  background: linear-gradient(to right, #fff, #fff000);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  margin-bottom: 10px;
+}
+
+.subtitle {
+  text-align: center;
+  color: white;
+  font-size: 1.2em;
+  margin-bottom: 30px;
+}
+
+.difficulty-card {
+  border: 3px solid;
+  border-radius: 15px;
+  padding: 20px;
+  margin-bottom: 15px;
+  cursor: pointer;
+  transition: all 0.3s;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.difficulty-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+}
+
+.easy {
+  background: #80f9a4;
+  border-color: #22c55e;
+}
+
+.medium {
+  background: #fef9c3;
+  border-color: #eab308;
+}
+
+.hard {
+  background: #fe9f9f;
+  border-color: #ef4444;
+}
+
+.difficulty-info h3 {
+  font-size: 1.5em;
+  margin-bottom: 5px;
+}
+
+.easy h3 {
+  color: #15803d;
+}
+
+.medium h3 {
+  color: #a16207;
+}
+
+.hard h3 {
+  color: #b91c1c;
+}
+
+.difficulty-info p {
+  font-size: 0.9em;
+}
+
+.easy p {
+  color: #16a34a;
+  font-weight: bolder;
+  font-size: large;
+}
+
+.medium p {
+  color: #ca8a04;
+  font-weight: bolder;
+  font-size: large;
+}
+
+.hard p {
+  color: #dc2626;
+  font-weight: bolder;
+  font-size: large;
+}
+
+.easy .emoji {
+  font-size: 2.5em;
+  color: green;
+}
+
+.medium .emoji {
+  font-size: 2.5em;
+  color: goldenrod;
+}
+
+.hard .emoji {
+  font-size: 2.5em;
+  color: red;
+}
+
+.instructions {
+  background: #585d62;
+  border-radius: 15px;
+  padding: 20px;
+  margin-top: 30px;
+}
+
+.instructions h3 {
+  color: #ffffff;
+  margin-bottom: 10px;
+  font-size: 1.5em;
+}
+
+.instructions li {
+  color: #ffffff;
+  margin-left: 20px;
+  margin-bottom: 5px;
+  font-weight: bolder;
+}
+
+.game-container {
+  max-width: 1000px;
+  width: 100%;
+}
+
+.game-main {
+  display: flex;
+  gap: 70px;
+}
+
+.stats-bar {
+  background: white;
+  border-radius: 15px;
+  padding: 20px;
+  margin-bottom: 20px;
+  display: flex;
+  justify-content: space-around;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+.stat {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 1.2em;
+  font-weight: bold;
+}
+
+.race-track {
+  background: white;
+  border-radius: 15px;
+  padding: 40px;
+  margin-bottom: 20px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+.lane {
+  margin-bottom: 40px;
+}
+
+.lane-header {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 10px;
+  font-weight: bold;
+  font-size: 1.1em;
+  width: 30vw;
+}
+
+.player-label {
+  color: #2563eb;
+}
+
+.bot-label {
+  color: #dc2626;
+}
+
+.track {
+  position: relative;
+  height: 60px;
+  background: linear-gradient(to right, #e5e7eb, #d1d5db);
+  border-radius: 30px;
+  border: 4px solid #9ca3af;
+  overflow: hidden;
+}
+
+.progress-bar {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  transition: width 0.3s;
+}
+
+.player-progress {
+  background: linear-gradient(to right, #60a5fa, #2563eb);
+}
+
+.bot-progress {
+  background: linear-gradient(to right, #f87171, #dc2626);
+}
+
+.racer {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%) translateX(-50%);
+  font-size: 2.5em;
+  transition: left 0.3s;
+}
+
+.finish-line {
+  text-align: right;
+  font-size: 4em;
+  margin-top: 10px;
+}
+
+.typing-area {
+  background: white;
+  border-radius: 15px;
+  padding: 40px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  height: 55vh;
+}
+
+.word-display {
+  text-align: center;
+  margin-bottom: 30px;
+}
+
+.previous-words {
+  color: #9ca3af;
+  font-size: 1.2em;
+  margin-bottom: 10px;
+}
+
+.current-word {
+  font-size: 4em;
+  font-weight: bold;
+  color: #2563eb;
+  margin: 20px 0;
+}
+
+.next-words {
+  color: #9ca3af;
+  font-size: 1.2em;
+  margin-top: 10px;
+}
+
+#typing-input {
+  width: 100%;
+  padding: 20px;
+  font-size: 2em;
+  text-align: center;
+  border: 4px solid #2563eb;
+  border-radius: 15px;
+  outline: none;
+}
+
+#typing-input:focus {
+  border-color: #7c3aed;
+}
+
+.result-container {
+  text-align: center;
+}
+
+.result-emoji {
+  font-size: 6em;
+  margin-bottom: 20px;
+}
+
+.result-title {
+  font-size: 3em;
+  font-weight: bold;
+  margin-bottom: 10px;
+}
+
+.win {
+  color: #22c55e;
+}
+
+.lose {
+  color: #ef4444;
+}
+
+.timeout {
+  color: #f59e0b;
+}
+
+.result-message {
+  font-size: 1.5em;
+  color: #666;
+  margin-bottom: 30px;
+}
+
+.stats-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 15px;
+  margin-bottom: 30px;
+}
+
+.stat-card {
+  padding: 20px;
+  border-radius: 15px;
+}
+
+.stat-card-blue {
+  background: #dbeafe;
+}
+
+.stat-card-green {
+  background: #dcfce7;
+}
+
+.stat-card-purple {
+  background: #f3e8ff;
+}
+
+.stat-card-red {
+  background: #fee2e2;
+}
+
+.stat-label {
+  font-size: 0.9em;
+  margin-bottom: 5px;
+}
+
+.stat-value {
+  font-size: 2em;
+  font-weight: bold;
+}
+
+.blue {
+  color: #2563eb;
+}
+
+.green {
+  color: #16a34a;
+}
+
+.purple {
+  color: #7c3aed;
+}
+
+.red {
+  color: #dc2626;
+}
+
+.button {
+  width: 100%;
+  padding: 20px;
+  font-size: 1.3em;
+  font-weight: bold;
+  border: none;
+  border-radius: 15px;
+  cursor: pointer;
+  transition: all 0.3s;
+  margin-bottom: 15px;
+}
+
+.button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+}
+
+.primary-button {
+  background: linear-gradient(to right, #2563eb, #7c3aed);
+  color: white;
+}
+
+.secondary-button {
+  background: #e5e7eb;
+  color: #374151;
+}
+
+.hidden {
+  display: none;
+}
+
+.loading {
+  text-align: center;
+  padding: 40px;
+  font-size: 1.5em;
+  color: #666;
+}
+
+.loading-spinner {
+  font-size: 3em;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+.error-message {
+  background: #fee2e2;
+  color: #991b1b;
+  padding: 15px;
+  border-radius: 10px;
+  margin-top: 20px;
+  text-align: center;
+  font-weight: bold;
+}
+
+.difficulty-card.disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  pointer-events: none;
+}

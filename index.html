@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Type Racing Game</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <!-- Menu Screen -->
+    <div id="menu-screen" class="container">
+        <h1 class="title">Type Race Game</h1>
+        <p class="subtitle">Race Against different difficulty level bots</p>
+
+        <div class="difficulty-card easy" id="easy-card" onclick="startGame('easy')">
+            <div class="difficulty-info">
+                <h3>Slow-King</h3>
+                <p>Short words • 35 WPM • Perfect for beginners</p>
+            </div>
+            <div class="emoji">Easy</div>
+        </div>
+
+        <div class="difficulty-card medium" id="medium-card" onclick="startGame('medium')">
+            <div class="difficulty-info">
+                <h3>Speeder Bot</h3>
+                <p>Medium words • 55 WPM • Good challenge</p>
+            </div>
+            <div class="emoji">Medium</div>
+        </div>
+
+        <div class="difficulty-card hard" id="hard-card" onclick="startGame('hard')">
+            <div class="difficulty-info">
+                <h3>Sonic Speeder</h3>
+                <p>Long words • 85 WPM • Expert level</p>
+            </div>
+            <div class="emoji">Hard</div>
+        </div>
+
+        <div class="instructions">
+            <h3>How to Play:</h3>
+            <ul>
+                <li>Type the words shown and press SPACE/ENTER</li>
+                <li>Race your car to the finish line</li>
+                <li>Beat the bot to win!</li>
+                <li>90 seconds on the clock</li>
+            </ul>
+        </div>
+
+        <!-- Add error container -->
+        <div id="error-container"></div>
+    </div>
+
+    <!-- Add Loading Screen -->
+    <div id="loading-screen" class="container hidden">
+        <div class="loading">
+            <div class="loading-spinner">⚙️</div>
+            <p style="color: white; font-size: 1.5em;">Loading random words...</p>
+        </div>
+    </div>
+
+    <!-- Game Screen -->
+    <div id="game-screen" class="game-container hidden">
+        <div class="stats-bar">
+            <div class="stat">
+                <span>⏱️</span>
+                <span id="timer">90s</span>
+            </div>
+            <div class="stat">
+                <span>⚡</span>
+                <span id="wpm">0 WPM</span>
+            </div>
+            <div class="stat">
+                <span>🎯</span>
+                <span id="progress">0/20</span>
+            </div>
+            <div class="stat">
+                <span>❌</span>
+                <span id="errors">0</span>
+            </div>
+        </div>
+        <div class="game-main">
+        <div class="race-track">
+            <div class="lane">
+                <div class="lane-header">
+                    <span class="player-label">👤 YOU</span>
+                    <span id="player-percent">0%</span>
+                </div>
+                <div class="track">
+                    <div class="progress-bar player-progress" id="player-bar"></div>
+                    <div class="racer" id="player-car">🏎️</div>
+                </div>
+            </div>
+
+            <div class="lane">
+                <div class="lane-header">
+                    <span class="bot-label" id="bot-name">🤖 Bot</span>
+                    <span id="bot-percent">0%</span>
+                </div>
+                <div class="track">
+                    <div class="progress-bar bot-progress" id="bot-bar"></div>
+                    <div class="racer" id="bot-car">🤖</div>
+                </div>
+            </div>
+
+            <div class="finish-line">🏁</div>
+        </div>
+
+        <div class="typing-area">
+            <div class="word-display">
+                <div class="previous-words" id="previous-words"></div>
+                <div class="current-word" id="current-word">ready</div>
+                <div class="next-words" id="next-words"></div>
+            </div>
+            <input type="text" id="typing-input" placeholder="Type here..." autocomplete="off" onchange="gameStart()">
+        </div>
+        </div>
+    </div>
+
+    <!-- Result Screen -->
+    <div id="result-screen" class="container hidden">
+        <div class="result-container">
+            <div class="result-emoji" id="result-emoji">🏆</div>
+            <h1 class="result-title" id="result-title">YOU WIN!</h1>
+            <p class="result-message" id="result-message">You beat the bot!</p>
+
+            <div class="stats-grid">
+                <div class="stat-card stat-card-blue">
+                    <div class="stat-label blue">Your Speed</div>
+                    <div class="stat-value blue" id="final-wpm">0 WPM</div>
+                </div>
+                <div class="stat-card stat-card-green">
+                    <div class="stat-label green">Words Typed</div>
+                    <div class="stat-value green" id="final-words">0</div>
+                </div>
+                <div class="stat-card stat-card-purple">
+                    <div class="stat-label purple">Accuracy</div>
+                    <div class="stat-value purple" id="final-accuracy">0%</div>
+                </div>
+                <div class="stat-card stat-card-red">
+                    <div class="stat-label red">Errors</div>
+                    <div class="stat-value red" id="final-errors">0</div>
+                </div>
+            </div>
+
+            <button class="button primary-button" onclick="raceAgain()">
+                Race Again
+            </button>
+            <button class="button secondary-button" onclick="backToMenu()">
+                Back to Menu
+            </button>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+
+</html>
