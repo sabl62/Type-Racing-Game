@@ -270,25 +270,27 @@ function startBotTimer() {
   }, 100);
 }
 
-document.getElementById("typing-input").addEventListener("input", (e) => {
+// Handle typing
+document.getElementById('typing-input').addEventListener('input', (e) => {
   const value = e.target.value;
 
-  if (value.endsWith(" ")) {
+  // Check if user pressed space OR enter (by checking for newline character)
+  if (value.endsWith(' ') || value.includes('\n')) {
     const typedWord = value.trim();
     const currentWord = gameState.words[gameState.currentWordIndex];
 
     if (typedWord === currentWord) {
+      // If this is the first word, update start time for accurate WPM
       if (gameState.wordsTyped === 0) {
         gameState.startTime = Date.now();
       }
 
       gameState.wordsTyped++;
       gameState.currentWordIndex++;
-      gameState.playerProgress =
-        (gameState.wordsTyped / gameState.words.length) * 100;
+      gameState.playerProgress = (gameState.wordsTyped / gameState.words.length) * 100;
 
       if (gameState.playerProgress >= 100) {
-        endGame("player");
+        endGame('player');
       }
 
       updateWordDisplay();
@@ -298,7 +300,40 @@ document.getElementById("typing-input").addEventListener("input", (e) => {
       updateStats();
     }
 
-    e.target.value = "";
+    e.target.value = '';
+  }
+});
+
+// Also handle Enter key press
+document.getElementById('typing-input').addEventListener('keydown', (e) => {
+  if (e.key === 'Enter') {
+    e.preventDefault(); // Prevent default Enter behavior
+
+    const typedWord = e.target.value.trim();
+    const currentWord = gameState.words[gameState.currentWordIndex];
+
+    if (typedWord === currentWord) {
+      // If this is the first word, update start time for accurate WPM
+      if (gameState.wordsTyped === 0) {
+        gameState.startTime = Date.now();
+      }
+
+      gameState.wordsTyped++;
+      gameState.currentWordIndex++;
+      gameState.playerProgress = (gameState.wordsTyped / gameState.words.length) * 100;
+
+      if (gameState.playerProgress >= 100) {
+        endGame('player');
+      }
+
+      updateWordDisplay();
+      updateStats();
+    } else if (typedWord !== '') {
+      gameState.errors++;
+      updateStats();
+    }
+
+    e.target.value = '';
   }
 });
 
