@@ -7,7 +7,7 @@
 }
 
 body {
-  font-family: "Popins", sans-serif;
+  font-family: "Poppins", sans-serif;
   background: linear-gradient(135deg, #333, darkblue, purple);
   min-height: 100vh;
   display: flex;
@@ -22,12 +22,13 @@ body {
   box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
   padding: 40px;
   max-width: 90vw;
-  width: 75vw;
+  width: 100%;
+  max-width: 1200px;
 }
 
 .title {
   text-align: center;
-  font-size: 3em;
+  font-size: clamp(2em, 5vw, 3em);
   background: linear-gradient(to right, #fff, #fff000);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
@@ -38,7 +39,7 @@ body {
 .subtitle {
   text-align: center;
   color: white;
-  font-size: 1.2em;
+  font-size: clamp(1em, 2.5vw, 1.2em);
   margin-bottom: 30px;
 }
 
@@ -52,6 +53,8 @@ body {
   display: flex;
   justify-content: space-between;
   align-items: center;
+  flex-wrap: wrap;
+  gap: 10px;
 }
 
 .difficulty-card:hover {
@@ -75,7 +78,7 @@ body {
 }
 
 .difficulty-info h3 {
-  font-size: 1.5em;
+  font-size: clamp(1.2em, 3vw, 1.5em);
   margin-bottom: 5px;
 }
 
@@ -92,39 +95,34 @@ body {
 }
 
 .difficulty-info p {
-  font-size: 0.9em;
+  font-size: clamp(0.8em, 2vw, 1em);
+  font-weight: bolder;
 }
 
 .easy p {
   color: #16a34a;
-  font-weight: bolder;
-  font-size: large;
 }
 
 .medium p {
   color: #ca8a04;
-  font-weight: bolder;
-  font-size: large;
 }
 
 .hard p {
   color: #dc2626;
-  font-weight: bolder;
-  font-size: large;
 }
 
 .easy .emoji {
-  font-size: 2.5em;
+  font-size: clamp(1.5em, 4vw, 2.5em);
   color: green;
 }
 
 .medium .emoji {
-  font-size: 2.5em;
+  font-size: clamp(1.5em, 4vw, 2.5em);
   color: goldenrod;
 }
 
 .hard .emoji {
-  font-size: 2.5em;
+  font-size: clamp(1.5em, 4vw, 2.5em);
   color: red;
 }
 
@@ -138,7 +136,7 @@ body {
 .instructions h3 {
   color: #ffffff;
   margin-bottom: 10px;
-  font-size: 1.5em;
+  font-size: clamp(1.2em, 3vw, 1.5em);
 }
 
 .instructions li {
@@ -146,42 +144,56 @@ body {
   margin-left: 20px;
   margin-bottom: 5px;
   font-weight: bolder;
+  font-size: clamp(0.9em, 2vw, 1em);
 }
 
 .game-container {
-  max-width: 1000px;
+  max-width: 100%;
   width: 100%;
 }
 
 .game-main {
   display: flex;
-  gap: 70px;
+  gap: 20px;
+  flex-direction: row;
+}
+
+/* Tablet and below - Stack vertically */
+@media (max-width: 1024px) {
+  .game-main {
+    flex-direction: column;
+    gap: 20px;
+  }
 }
 
 .stats-bar {
   background: white;
   border-radius: 15px;
-  padding: 20px;
+  padding: 15px;
   margin-bottom: 20px;
   display: flex;
   justify-content: space-around;
+  flex-wrap: wrap;
+  gap: 10px;
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
 }
 
 .stat {
   display: flex;
   align-items: center;
-  gap: 10px;
-  font-size: 1.2em;
+  gap: 5px;
+  font-size: clamp(1em, 2.5vw, 1.2em);
   font-weight: bold;
 }
 
 .race-track {
   background: white;
   border-radius: 15px;
-  padding: 40px;
+  padding: clamp(20px, 5vw, 40px);
   margin-bottom: 20px;
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  flex: 1;
+  min-width: 0;
 }
 
 .lane {
@@ -193,8 +205,8 @@ body {
   justify-content: space-between;
   margin-bottom: 10px;
   font-weight: bold;
-  font-size: 1.1em;
-  width: 30vw;
+  font-size: clamp(0.9em, 2vw, 1.1em);
+  width: 100%;
 }
 
 .player-label {
@@ -207,11 +219,12 @@ body {
 
 .track {
   position: relative;
-  height: 60px;
+  height: clamp(50px, 8vw, 60px);
   background: linear-gradient(to right, #e5e7eb, #d1d5db);
   border-radius: 30px;
   border: 4px solid #9ca3af;
   overflow: hidden;
+  width: 100%;
 }
 
 .progress-bar {
@@ -234,22 +247,26 @@ body {
   position: absolute;
   top: 50%;
   transform: translateY(-50%) translateX(-50%);
-  font-size: 2.5em;
+  font-size: clamp(1.5em, 4vw, 2.5em);
   transition: left 0.3s;
 }
 
 .finish-line {
   text-align: right;
-  font-size: 4em;
+  font-size: clamp(2em, 6vw, 4em);
   margin-top: 10px;
 }
 
 .typing-area {
   background: white;
   border-radius: 15px;
-  padding: 40px;
+  padding: clamp(20px, 5vw, 40px);
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-  height: 55vh;
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
 }
 
 .word-display {
@@ -259,27 +276,33 @@ body {
 
 .previous-words {
   color: #9ca3af;
-  font-size: 1.2em;
+  font-size: clamp(0.8em, 2vw, 1.2em);
   margin-bottom: 10px;
+  min-height: 1.5em;
 }
 
 .current-word {
-  font-size: 4em;
+  font-size: clamp(2em, 6vw, 4em);
   font-weight: bold;
   color: #2563eb;
   margin: 20px 0;
+  letter-spacing: 0.05em;
+  font-family: monospace;
+  word-wrap: break-word;
+  overflow-wrap: break-word;
 }
 
 .next-words {
   color: #9ca3af;
-  font-size: 1.2em;
+  font-size: clamp(0.8em, 2vw, 1.2em);
   margin-top: 10px;
+  min-height: 1.5em;
 }
 
 #typing-input {
   width: 100%;
-  padding: 20px;
-  font-size: 2em;
+  padding: clamp(15px, 3vw, 20px);
+  font-size: clamp(1.2em, 3vw, 2em);
   text-align: center;
   border: 4px solid #2563eb;
   border-radius: 15px;
@@ -295,12 +318,12 @@ body {
 }
 
 .result-emoji {
-  font-size: 6em;
+  font-size: clamp(3em, 10vw, 6em);
   margin-bottom: 20px;
 }
 
 .result-title {
-  font-size: 3em;
+  font-size: clamp(2em, 6vw, 3em);
   font-weight: bold;
   margin-bottom: 10px;
 }
@@ -318,20 +341,20 @@ body {
 }
 
 .result-message {
-  font-size: 1.5em;
+  font-size: clamp(1em, 3vw, 1.5em);
   color: #666;
   margin-bottom: 30px;
 }
 
 .stats-grid {
   display: grid;
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
   gap: 15px;
   margin-bottom: 30px;
 }
 
 .stat-card {
-  padding: 20px;
+  padding: clamp(15px, 3vw, 20px);
   border-radius: 15px;
 }
 
@@ -352,12 +375,12 @@ body {
 }
 
 .stat-label {
-  font-size: 0.9em;
+  font-size: clamp(0.8em, 2vw, 0.9em);
   margin-bottom: 5px;
 }
 
 .stat-value {
-  font-size: 2em;
+  font-size: clamp(1.5em, 4vw, 2em);
   font-weight: bold;
 }
 
@@ -379,8 +402,8 @@ body {
 
 .button {
   width: 100%;
-  padding: 20px;
-  font-size: 1.3em;
+  padding: clamp(15px, 3vw, 20px);
+  font-size: clamp(1em, 2.5vw, 1.3em);
   font-weight: bold;
   border: none;
   border-radius: 15px;
@@ -411,12 +434,12 @@ body {
 .loading {
   text-align: center;
   padding: 40px;
-  font-size: 1.5em;
+  font-size: clamp(1em, 3vw, 1.5em);
   color: #666;
 }
 
 .loading-spinner {
-  font-size: 3em;
+  font-size: clamp(2em, 6vw, 3em);
   animation: spin 1s linear infinite;
 }
 
@@ -438,10 +461,135 @@ body {
   margin-top: 20px;
   text-align: center;
   font-weight: bold;
+  font-size: clamp(0.9em, 2vw, 1em);
 }
 
 .difficulty-card.disabled {
   opacity: 0.5;
   cursor: not-allowed;
   pointer-events: none;
+}
+
+.current-word .correct {
+  color: #22c55e;
+}
+
+.current-word .incorrect {
+  color: #ef4444;
+}
+
+.current-word .pending {
+  color: #9ca3af;
+}
+
+.current-word .correct {
+  animation: correctPulse 0.3s ease;
+}
+
+@keyframes correctPulse {
+  0% {
+    transform: scale(1);
+  }
+
+  50% {
+    transform: scale(1.2);
+  }
+
+  100% {
+    transform: scale(1);
+  }
+}
+
+/* Mobile specific adjustments */
+@media (max-width: 768px) {
+  body {
+    padding: 10px;
+  }
+
+  .container {
+    padding: 20px;
+    border-radius: 20px;
+  }
+
+  .difficulty-card {
+    padding: 15px;
+  }
+
+  .instructions {
+    padding: 15px;
+  }
+
+  .instructions li {
+    margin-left: 15px;
+    font-size: 0.9em;
+  }
+
+  .stats-bar {
+    padding: 10px;
+  }
+
+  .race-track {
+    padding: 20px;
+  }
+
+  .lane {
+    margin-bottom: 30px;
+  }
+
+  .typing-area {
+    padding: 20px;
+  }
+
+  .word-display {
+    margin-bottom: 20px;
+  }
+
+  .stats-grid {
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+  }
+}
+
+/* Small mobile devices */
+@media (max-width: 480px) {
+  .container {
+    padding: 15px;
+  }
+
+  .game-main {
+    gap: 15px;
+  }
+
+  .stats-bar {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 8px;
+  }
+
+  .stat {
+    width: 100%;
+  }
+
+  .lane {
+    margin-bottom: 25px;
+  }
+
+  .track {
+    height: 45px;
+  }
+
+  .racer {
+    font-size: 1.8em;
+  }
+}
+
+/* Large screens */
+@media (min-width: 1440px) {
+  .container {
+    max-width: 1400px;
+  }
+
+  .game-main {
+    gap: 40px;
+  }
 }

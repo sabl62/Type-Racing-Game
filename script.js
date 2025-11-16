@@ -1,3 +1,49 @@
+const title = document.getElementById("title");
+
+//toast
+function showSuccessToast(message) {
+  Toastify({
+    text: message,
+    duration: 3000,
+    gravity: "bottom",
+    position: "center",
+    backgroundColor: "linear-gradient(to right, #22c55e, #16a34a)",
+    stopOnFocus: true,
+  }).showToast();
+}
+
+function showErrorToast(message) {
+  Toastify({
+    text: message,
+    duration: 3000,
+    gravity: "bottom",
+    position: "center",
+    backgroundColor: "linear-gradient(to right, #ef4444, #dc2626)",
+    stopOnFocus: true,
+  }).showToast();
+}
+
+function showInfoToast(message) {
+  Toastify({
+    text: message,
+    duration: 3000,
+    gravity: "bottom",
+    position: "center",
+    backgroundColor: "linear-gradient(to right, #3b82f6, #2563eb)",
+    stopOnFocus: true,
+  }).showToast();
+}
+
+function showWarningToast(message) {
+  Toastify({
+    text: message,
+    duration: 3000,
+    gravity: "top",
+    position: "right",
+    backgroundColor: "linear-gradient(to right, #f59e0b, #d97706)",
+    stopOnFocus: true,
+  }).showToast();
+}
 let gameState = {
   difficulty: "medium",
   words: [],
@@ -15,9 +61,9 @@ let gameState = {
 
 const botSpeeds = { easy: 35, medium: 55, hard: 85 };
 const botNames = {
-  easy: "🐢 Slowpoke Bot",
-  medium: "🏃 Speedster Bot",
-  hard: "⚡ Lightning Bot",
+  easy: "Slow-King Bot",
+  medium: "Speeder Bot",
+  hard: "Sonic Speeder",
 };
 
 const fallbackWords = {
@@ -136,7 +182,7 @@ async function startGame(difficulty) {
     if (words.length < 20) {
       throw new Error("Not enough words fetched");
     }
-
+    title.innerText = difficulty + " mode";
     gameState.difficulty = difficulty;
     gameState.words = words;
     gameState.currentWordIndex = 0;
@@ -190,6 +236,24 @@ function showError(message) {
   setTimeout(() => {
     errorContainer.innerHTML = "";
   }, 5000);
+}
+
+function updateWordDisplayWithColors(typedValue) {
+  const currentWord = gameState.words[gameState.currentWordIndex] || "";
+  let displayHTML = "";
+
+  for (let i = 0; i < currentWord.length; i++) {
+    if (i < typedValue.length) {
+      if (typedValue[i] === currentWord[i]) {
+        displayHTML += `<span class="correct">${currentWord[i]}</span>`;
+      } else {
+        displayHTML += `<span class="incorrect">${currentWord[i]}</span>`;
+      }
+    } else {
+      displayHTML += `<span class="pending">${currentWord[i]}</span>`;
+    }
+  }
+  document.getElementById("current-word").innerHTML = displayHTML;
 }
 
 function updateWordDisplay() {
@@ -270,73 +334,83 @@ function startBotTimer() {
   }, 100);
 }
 
-// Handle typing
-document.getElementById('typing-input').addEventListener('input', (e) => {
+document.getElementById("typing-input").addEventListener("input", (e) => {
   const value = e.target.value;
 
-  // Check if user pressed space OR enter (by checking for newline character)
-  if (value.endsWith(' ') || value.includes('\n')) {
+  updateWordDisplayWithColors(value);
+
+  if (value.endsWith(" ")) {
     const typedWord = value.trim();
     const currentWord = gameState.words[gameState.currentWordIndex];
 
     if (typedWord === currentWord) {
-      // If this is the first word, update start time for accurate WPM
+      showSuccessToast("✅ Correct!");
+
       if (gameState.wordsTyped === 0) {
         gameState.startTime = Date.now();
       }
 
       gameState.wordsTyped++;
       gameState.currentWordIndex++;
-      gameState.playerProgress = (gameState.wordsTyped / gameState.words.length) * 100;
+      gameState.playerProgress =
+        (gameState.wordsTyped / gameState.words.length) * 100;
 
       if (gameState.playerProgress >= 100) {
-        endGame('player');
+        endGame("player");
       }
 
       updateWordDisplay();
       updateStats();
     } else {
+      showErrorToast("❌ Wrong! Try again");
+
       gameState.errors++;
       updateStats();
     }
 
-    e.target.value = '';
+    e.target.value = "";
+
+    updateWordDisplay();
   }
 });
 
-// Also handle Enter key press
-document.getElementById('typing-input').addEventListener('keydown', (e) => {
-  if (e.key === 'Enter') {
-    e.preventDefault(); // Prevent default Enter behavior
+document.getElementById("typing-input").addEventListener("keydown", (e) => {
+  if (e.key === "Enter") {
+    e.preventDefault();
 
     const typedWord = e.target.value.trim();
     const currentWord = gameState.words[gameState.currentWordIndex];
 
     if (typedWord === currentWord) {
-      // If this is the first word, update start time for accurate WPM
+      showSuccessToast("✅ Correct!");
+
       if (gameState.wordsTyped === 0) {
         gameState.startTime = Date.now();
       }
 
       gameState.wordsTyped++;
       gameState.currentWordIndex++;
-      gameState.playerProgress = (gameState.wordsTyped / gameState.words.length) * 100;
+      gameState.playerProgress =
+        (gameState.wordsTyped / gameState.words.length) * 100;
 
       if (gameState.playerProgress >= 100) {
-        endGame('player');
+        endGame("player");
       }
 
       updateWordDisplay();
       updateStats();
-    } else if (typedWord !== '') {
+    } else if (typedWord !== "") {
+      showErrorToast("❌ Wrong! Try again");
+
       gameState.errors++;
       updateStats();
     }
 
-    e.target.value = '';
+    e.target.value = "";
+
+    updateWordDisplay();
   }
 });
-
 function endGame(winner) {
   if (gameState.raceFinished) return;
   gameState.raceFinished = true;
