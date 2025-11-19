@@ -125,39 +125,58 @@ const fallbackWords = {
 async function fetchRandomWords(difficulty, count = 20) {
   const lengthParams = {
     easy: { min: 3, max: 5 },
-    medium: { min: 6, max: 8 },
+    medium: { min: 6, max: 9 },
     hard: { min: 9, max: 15 },
   };
 
   const params = lengthParams[difficulty];
-  const words = [];
+  const words = new Set(); // Use Set to avoid duplicates
 
   try {
-    for (let i = 0; i < count; i++) {
+    // Fetch multiple words at once with different patterns
+    while (words.size < count) {
+      const length = Math.floor(Math.random() * (params.max - params.min + 1)) + params.min;
+      const qMark = "?".repeat(length);
+
       const response = await fetch(
-        `https://random-word-api.herokuapp.com/word?length=${
-          Math.floor(Math.random() * (params.max - params.min + 1)) + params.min
-        }`
+        `https://api.datamuse.com/words?sp=${qMark}&max=10` // Get 10 results per request
       );
 
-      if (!response.ok) throw new Error("API request failed");
-
       const data = await response.json();
-      if (data && data[0]) {
-        words.push(data[0].toLowerCase());
+
+      if (data && data.length > 0) {
+        // Add random words from the results
+        const shuffled = data.sort(() => Math.random() - 0.5);
+        for (let item of shuffled) {
+          if (item.word && words.size < count) {
+            words.add(item.word.toLowerCase());
+          }
+        }
       }
 
-      await new Promise((resolve) => setTimeout(resolve, 50));
+      // Prevent infinite loop
+      if (data.length === 0) {
+        break;
+      }
+
+      await new Promise((resolve) => setTimeout(resolve, 100));
     }
 
-    return words;
+    const wordArray = Array.from(words);
+
+    // If we didn't get enough words, fill with fallback
+    if (wordArray.length < count) {
+      console.warn(`Only fetched ${wordArray.length} words, using fallback for remaining`);
+      const remaining = count - wordArray.length;
+      wordArray.push(...getFallbackWords(difficulty, remaining));
+    }
+
+    return wordArray;
   } catch (error) {
     console.error("Error fetching words:", error);
-
     return getFallbackWords(difficulty, count);
   }
 }
-
 function getFallbackWords(difficulty, count) {
   const words = [];
   const wordList = fallbackWords[difficulty];
